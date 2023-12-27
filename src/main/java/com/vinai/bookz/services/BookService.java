@@ -40,9 +40,7 @@ public class BookService {
     }
 
     public void deleteBook(Long id) {
-        Book book = findBook(id);
-        book.setDeleted(true);
-        bookRepository.save(book);
+        bookRepository.deleteById(id);
     }
 
 

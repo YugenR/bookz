@@ -2,6 +2,7 @@ package com.vinai.bookz.services;
 
 import com.vinai.bookz.dtos.BookDTO;
 import com.vinai.bookz.entities.Book;
+import com.vinai.bookz.exceptions.BadRequestException;
 import com.vinai.bookz.exceptions.NotFoundException.BookNotFound;
 import com.vinai.bookz.repositories.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,10 @@ public class BookService {
     }
 
     public BookDTO.BookDetail createBook(BookDTO.BookCreate bookDto) {
+
+        if (checkIsbnExists(bookDto.getIsbn()))
+            throw new BadRequestException.IsbnAlreadyExists();
+
         Book book = new Book(bookDto.getTitle(), bookDto.getAuthor(), bookDto.getIsbn(), bookDto.getPlot());
         return bookRepository.save(book).toDTODetail();
     }
@@ -35,13 +40,19 @@ public class BookService {
     }
 
     public void deleteBook(Long id) {
-        bookRepository.deleteById(id);
+        Book book = findBook(id);
+        book.setDeleted(true);
+        bookRepository.save(book);
     }
 
 
     public Book findBook(Long id) throws BookNotFound {
         return bookRepository.findById(id)
                 .orElseThrow(BookNotFound::new);
+    }
+
+    public Boolean checkIsbnExists(String isbn) {
+        return bookRepository.findByIsbn(isbn).isPresent();
     }
 
 

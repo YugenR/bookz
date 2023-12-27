@@ -5,13 +5,14 @@ import com.vinai.bookz.dtos.BookDTO;
 import jakarta.persistence.*;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
 import java.time.LocalDateTime;
 
 @Entity
-// todo capire come scrivere sta roba
-//@SQLRestriction("deleted is false")
+@SQLRestriction("deleted <> true")
+@SQLDelete(sql = "UPDATE book SET deleted = true, deleted_at = current_timestamp WHERE id = ?")
 @RequiredArgsConstructor
 public class Book {
 
@@ -35,6 +36,9 @@ public class Book {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
+    @Column
+    private LocalDateTime deletedAt;
+
     private boolean deleted;
 
     // todo: textarea
@@ -57,7 +61,10 @@ public class Book {
         this.author = author;
         this.isbn = isbn;
         this.plot = plot;
+    }
 
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 
 }

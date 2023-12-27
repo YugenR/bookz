@@ -11,8 +11,7 @@ import org.hibernate.annotations.SQLRestriction;
 import java.time.LocalDateTime;
 
 @Entity
-// todo capire come scrivere sta roba
-//@SQLRestriction("deleted is false")
+@SQLRestriction("deleted <> true")
 @SQLDelete(sql = "UPDATE book SET deleted = true, deleted_at = current_timestamp WHERE id = ?")
 @RequiredArgsConstructor
 public class Book {
@@ -38,7 +37,6 @@ public class Book {
     private LocalDateTime createdAt;
 
     @Column
-    @CreationTimestamp
     private LocalDateTime deletedAt;
 
     private boolean deleted;

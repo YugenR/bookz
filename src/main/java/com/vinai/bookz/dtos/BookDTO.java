@@ -26,6 +26,18 @@ public class BookDTO {
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
+    public static class BookUpdate {
+        @NonNull
+        private String title;
+        @NonNull
+        private String author;
+        @NonNull
+        private String plot;
+    }
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class BookData {
         private Long id;
         private String title;

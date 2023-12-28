@@ -33,9 +33,9 @@ public class BookService {
         return bookRepository.save(book).toDTODetail();
     }
 
-    public BookDTO.BookDetail updateBook(Long id, BookDTO.BookCreate bookDto) {
+    public BookDTO.BookDetail updateBook(Long id, BookDTO.BookUpdate bookDto) {
         Book book = findBook(id);
-        book.update(bookDto.getTitle(), bookDto.getAuthor(), bookDto.getIsbn(), bookDto.getPlot());
+        book.update(bookDto.getTitle(), bookDto.getAuthor(), bookDto.getPlot());
         return bookRepository.save(book).toDTODetail();
     }
 

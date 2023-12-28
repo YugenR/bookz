@@ -32,7 +32,7 @@ public class UserController {
     }
 
     @PostMapping("")
-    public UserDTO.UserDetail createUser(@RequestBody UserDTO.UserCreate user) {
+    public UserDTO.UserDetail createUser(@RequestBody @Valid UserDTO.UserCreate user) {
         return userService.createUser(user);
     }
 

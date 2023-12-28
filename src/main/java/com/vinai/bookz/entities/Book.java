@@ -17,13 +17,6 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class Book {
 
-    public Book(String title, String author, String isbn, String plot) {
-        this.title = title;
-        this.author = author;
-        this.isbn = isbn;
-        this.plot = plot;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
@@ -33,18 +26,23 @@ public class Book {
     @Column
     private String author;
     @Column(unique = true)
+    @Getter
     private String isbn;
     @Column
     @CreationTimestamp
     private LocalDateTime createdAt;
-
     @Column
     private LocalDateTime deletedAt;
-
     private boolean deleted;
-
-    // todo: textarea
+    @Column(columnDefinition = "TEXT")
     private String plot;
+
+    public Book(String title, String author, String isbn, String plot) {
+        this.title = title;
+        this.author = author;
+        this.isbn = isbn;
+        this.plot = plot;
+    }
 
     public BookDTO.BookData toDTOData() {
         return new BookDTO.BookData(
@@ -58,10 +56,9 @@ public class Book {
         );
     }
 
-    public void update(String title, String author, String isbn, String plot) {
+    public void update(String title, String author, String plot) {
         this.title = title;
         this.author = author;
-        this.isbn = isbn;
         this.plot = plot;
     }
 

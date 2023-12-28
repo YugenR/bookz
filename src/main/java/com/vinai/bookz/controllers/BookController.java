@@ -3,6 +3,7 @@ package com.vinai.bookz.controllers;
 import com.vinai.bookz.dtos.BookDTO;
 import com.vinai.bookz.exceptions.NotFoundException.BookNotFound;
 import com.vinai.bookz.services.BookService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -32,12 +33,12 @@ public class BookController {
     }
 
     @PostMapping("")
-    public BookDTO.BookDetail createBook(@RequestBody BookDTO.BookCreate book) {
+    public BookDTO.BookDetail createBook(@RequestBody @Valid BookDTO.BookCreate book) {
         return bookService.createBook(book);
     }
 
     @PatchMapping("{id}")
-    public BookDTO.BookDetail updateBook(@PathVariable long id, @RequestBody BookDTO.BookCreate book) {
+    public BookDTO.BookDetail updateBook(@PathVariable long id, @RequestBody @Valid BookDTO.BookUpdate book) {
         return bookService.updateBook(id, book);
     }
 

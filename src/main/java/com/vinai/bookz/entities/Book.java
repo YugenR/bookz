@@ -3,6 +3,7 @@ package com.vinai.bookz.entities;
 
 import com.vinai.bookz.dtos.BookDTO;
 import jakarta.persistence.*;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
@@ -25,6 +26,7 @@ public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter
     private Long id;
     @Column
     private String title;

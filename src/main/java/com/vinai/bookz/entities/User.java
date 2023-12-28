@@ -3,6 +3,7 @@ package com.vinai.bookz.entities;
 
 import com.vinai.bookz.dtos.UserDTO;
 import jakarta.persistence.*;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
@@ -16,12 +17,13 @@ import java.util.Set;
 
 @Entity
 @SQLRestriction("deleted <> true")
-@SQLDelete(sql = "UPDATE user SET deleted = true, deleted_at = current_timestamp WHERE id = ?")
+@SQLDelete(sql = "UPDATE user SET email = CONCAT(email, '_deleted'), deleted = true, deleted_at = current_timestamp WHERE id = ?")
 @RequiredArgsConstructor
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter
     private Long id;
     @Column(unique = true)
     private String email;

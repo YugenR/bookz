@@ -3,6 +3,7 @@ package com.vinai.bookz.controllers;
 import com.vinai.bookz.dtos.UserDTO;
 import com.vinai.bookz.exceptions.NotFoundException.UserNotFound;
 import com.vinai.bookz.services.UserService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -36,7 +37,7 @@ public class UserController {
     }
 
     @PatchMapping("{id}")
-    public UserDTO.UserDetail updateUser(@PathVariable long id, @RequestBody UserDTO.UserCreate user) {
+    public UserDTO.UserDetail updateUser(@PathVariable long id, @RequestBody @Valid UserDTO.UserUpdate user) {
         return userService.updateUser(id, user);
     }
 

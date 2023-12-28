@@ -34,7 +34,7 @@ public class UserService {
         return userRepository.save(user).toDTODetail();
     }
 
-    public UserDTO.UserDetail updateUser(Long id, UserDTO.UserCreate userDto) {
+    public UserDTO.UserDetail updateUser(Long id, UserDTO.UserUpdate userDto) {
         User user = findUser(id);
         user.update(userDto.getName(), userDto.getSurname());
         return userRepository.save(user).toDTODetail();

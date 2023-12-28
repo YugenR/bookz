@@ -24,6 +24,17 @@ public class UserDTO {
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
+    public static class UserUpdate {
+        @NonNull
+        private String name;
+        @NonNull
+        private String surname;
+    }
+
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class UserData {
         private Long id;
         private String name;

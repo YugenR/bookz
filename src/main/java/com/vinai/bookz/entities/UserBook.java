@@ -2,29 +2,35 @@ package com.vinai.bookz.entities;
 
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
 
 @Entity
+@NoArgsConstructor
 public class UserBook implements Serializable {
 
-    public UserBook(Long userId, Long bookId) {
-        this.id = new UserBookId(userId, bookId);
+    public UserBook(User user, Book book) {
+        this.id = new UserBookId(user, book);
+        this.user = user;
+        this.book = book;
         this.times = 1;
+
     }
 
 
     @Embeddable
+    @NoArgsConstructor
     public static class UserBookId implements Serializable {
 
-        public UserBookId(Long userId, Long bookId) {
-            this.userId = userId;
-            this.bookId = bookId;
+        public UserBookId(User user, Book book) {
+            this.userId = user.getId();
+            this.bookId = book.getId();
         }
         private long userId, bookId;
-
     }
 
     @EmbeddedId
@@ -41,11 +47,9 @@ public class UserBook implements Serializable {
     @JoinColumn
     private Book book;
 
+    @Getter
+    @Setter
     @Column
     private Integer times;
-
-    public Integer getTimes() {
-        return times;
-    }
 
 }

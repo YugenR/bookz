@@ -1,7 +1,5 @@
-package com.starktech.everest.backend.config;
+package com.vinai.bookz.config;
 
-import com.starktech.everest.backend.filters.FirebaseJwtFilter;
-import com.starktech.everest.backend.model.repositories.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -20,13 +18,6 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 @Slf4j
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-
-    @Autowired
-    UserRepository us;
-
-    @Autowired
-    FirebaseJwtFilter firebaseJwtFilter;
-
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
     }
@@ -40,8 +31,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf().disable();
 
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
-        http.addFilterBefore(firebaseJwtFilter, BasicAuthenticationFilter.class);
 
     }
 

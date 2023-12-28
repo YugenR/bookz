@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.DefaultSecurityFilterChain;
+import org.springframework.security.web.SecurityFilterChain;
 
 
 @EnableWebSecurity
@@ -17,7 +18,7 @@ import org.springframework.security.web.DefaultSecurityFilterChain;
 class SecurityConfiguration extends GlobalMethodSecurityConfiguration {
 
     @Bean
-    DefaultSecurityFilterChain configure(HttpSecurity http) throws Exception {
+    SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http.cors(Customizer.withDefaults());
 
         http.csrf(AbstractHttpConfigurer::disable);

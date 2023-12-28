@@ -1,56 +1,57 @@
 package com.vinai.bookz.services;
 
-import com.vinai.bookz.dtos.BookDTO;
-import com.vinai.bookz.entities.Book;
+import com.vinai.bookz.dtos.UserDTO;
+import com.vinai.bookz.entities.User;
 import com.vinai.bookz.exceptions.BadRequestException;
-import com.vinai.bookz.exceptions.NotFoundException.BookNotFound;
-import com.vinai.bookz.repositories.BookRepository;
+import com.vinai.bookz.exceptions.NotFoundException.UserNotFound;
+import com.vinai.bookz.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class BookService {
+public class UserService {
+
     @Autowired
-    private BookRepository bookRepository;
+    private UserRepository userRepository;
 
-    public List<BookDTO.BookData> getAllBooks() {
-        return bookRepository.findAll()
-                .stream().map(Book::toDTOData).toList();
+    public List<UserDTO.UserData> getAllUsers() {
+        return userRepository.findAll()
+                .stream().map(User::toDTOData).toList();
     }
 
-    public BookDTO.BookDetail getBook(Long id) {
-        return findBook(id).toDTODetail();
+    public UserDTO.UserDetail getUser(Long id) {
+        return findUser(id).toDTODetail();
     }
 
-    public BookDTO.BookDetail createBook(BookDTO.BookCreate bookDto) {
+    public UserDTO.UserDetail createUser(UserDTO.UserCreate userDto) {
 
-        if (checkIsbnExists(bookDto.getIsbn()))
-            throw new BadRequestException.IsbnAlreadyExists();
+        if (checkEmailExists(userDto.getEmail()))
+            throw new BadRequestException.EmailAlreadyExists();
 
-        Book book = new Book(bookDto.getTitle(), bookDto.getAuthor(), bookDto.getIsbn(), bookDto.getPlot());
-        return bookRepository.save(book).toDTODetail();
+        User user = new User(userDto.getEmail(), userDto.getName(), userDto.getSurname());
+        return userRepository.save(user).toDTODetail();
     }
 
-    public BookDTO.BookDetail updateBook(Long id, BookDTO.BookCreate bookDto) {
-        Book book = findBook(id);
-        book.update(bookDto.getTitle(), bookDto.getAuthor(), bookDto.getIsbn(), bookDto.getPlot());
-        return bookRepository.save(book).toDTODetail();
+    public UserDTO.UserDetail updateUser(Long id, UserDTO.UserCreate userDto) {
+        User user = findUser(id);
+        user.update(userDto.getName(), userDto.getSurname());
+        return userRepository.save(user).toDTODetail();
     }
 
-    public void deleteBook(Long id) {
-        bookRepository.deleteById(id);
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
     }
 
 
-    public Book findBook(Long id) throws BookNotFound {
-        return bookRepository.findById(id)
-                .orElseThrow(BookNotFound::new);
+    public User findUser(Long id) throws UserNotFound {
+        return userRepository.findById(id)
+                .orElseThrow(UserNotFound::new);
     }
 
-    public Boolean checkIsbnExists(String isbn) {
-        return bookRepository.findByIsbn(isbn).isPresent();
+    public Boolean checkEmailExists(String email) {
+        return userRepository.findByEmail(email).isPresent();
     }
 
 

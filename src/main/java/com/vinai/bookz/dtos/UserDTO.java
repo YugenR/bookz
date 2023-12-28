@@ -7,43 +7,44 @@ import lombok.NonNull;
 
 import java.time.LocalDateTime;
 
-public class BookDTO {
+public class UserDTO {
 
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class BookCreate {
+    public static class UserCreate {
         @NonNull
-        private String title;
+        private String name;
         @NonNull
-        private String author;
+        private String surname;
         @NonNull
-        private String isbn;
-        @NonNull
-        private String plot;
+        private String email;
     }
 
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class BookData {
+    public static class UserData {
         private Long id;
-        private String title;
-        private String author;
-        private String isbn;
+        private String name;
+        private String surname;
+        private String email;
         private LocalDateTime createdAt;
     }
 
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class BookDetail {
+    public static class UserDetail {
         private Long id;
-        private String title;
-        private String author;
-        private String isbn;
+        private String name;
+        private String surname;
+        private String email;
         private LocalDateTime createdAt;
-        private String plot;
+        // How many books the user has read
+        private Long bookCount;
+        // Sum of every time the user has read
+        private Long totalReadCount;
     }
 
 }

@@ -11,5 +11,11 @@ public class BadRequestException extends Throwable {
     )
     public static class IsbnAlreadyExists extends RuntimeException {}
 
+    @ResponseStatus(
+            value = HttpStatus.BAD_REQUEST,
+            reason = "A user with this email already exists"
+    )
+    public static class EmailAlreadyExists extends RuntimeException {}
+
 
 }

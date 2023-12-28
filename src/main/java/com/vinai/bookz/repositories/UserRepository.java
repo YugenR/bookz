@@ -1,13 +1,13 @@
 package com.vinai.bookz.repositories;
 
-import com.vinai.bookz.entities.Book;
+import com.vinai.bookz.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface BookRepository extends JpaRepository<Book, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
 
-    Optional<Book> findByIsbn(String isbn);
+    Optional<User> findByEmail(String email);
 
 
 }

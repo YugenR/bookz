@@ -1,8 +1,8 @@
 package com.vinai.bookz.controllers;
 
-import com.vinai.bookz.dtos.BookDTO;
-import com.vinai.bookz.exceptions.NotFoundException.BookNotFound;
-import com.vinai.bookz.services.BookService;
+import com.vinai.bookz.dtos.UserDTO;
+import com.vinai.bookz.exceptions.NotFoundException.UserNotFound;
+import com.vinai.bookz.services.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -11,39 +11,38 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("books")
+@RequestMapping("users")
 @Slf4j
 @CrossOrigin(origins = "*")
-public class BookController {
+public class UserController {
 
     @Autowired
-    private BookService bookService;
+    private UserService userService;
 
 
     @GetMapping("")
-    public List<BookDTO.BookData> getBooks() {
-        return bookService.getAllBooks();
-
+    public List<UserDTO.UserData> getUsers() {
+        return userService.getAllUsers();
     }
 
     @GetMapping("{id}")
-    public BookDTO.BookDetail getBook(@PathVariable long id) throws BookNotFound {
-        return bookService.getBook(id);
+    public UserDTO.UserDetail getUser(@PathVariable long id) throws UserNotFound {
+        return userService.getUser(id);
     }
 
     @PostMapping("")
-    public BookDTO.BookDetail createBook(@RequestBody BookDTO.BookCreate book) {
-        return bookService.createBook(book);
+    public UserDTO.UserDetail createUser(@RequestBody UserDTO.UserCreate user) {
+        return userService.createUser(user);
     }
 
     @PatchMapping("{id}")
-    public BookDTO.BookDetail updateBook(@PathVariable long id, @RequestBody BookDTO.BookCreate book) {
-        return bookService.updateBook(id, book);
+    public UserDTO.UserDetail updateUser(@PathVariable long id, @RequestBody UserDTO.UserCreate user) {
+        return userService.updateUser(id, user);
     }
 
     @DeleteMapping("{id}")
-    public void deleteBook(@PathVariable long id) {
-        bookService.deleteBook(id);
+    public void deleteUser(@PathVariable long id) {
+        userService.deleteUser(id);
     }
 
 }

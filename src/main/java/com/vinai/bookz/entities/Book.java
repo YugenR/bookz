@@ -50,7 +50,7 @@ public class Book {
 
     public BookDTO.BookData toDTOData() {
         return new BookDTO.BookData(
-                title, author, isbn, createdAt
+                title, author, isbn, plot, createdAt
         );
     }
 

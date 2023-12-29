@@ -13,11 +13,11 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class UserBook implements Serializable {
 
-    public UserBook(User user, Book book) {
+    public UserBook(User user, Book book, Integer times) {
         this.id = new UserBookId(user, book);
         this.user = user;
         this.book = book;
-        this.times = 1;
+        this.times = times;
 
     }
 

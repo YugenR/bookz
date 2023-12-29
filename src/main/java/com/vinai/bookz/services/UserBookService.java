@@ -32,11 +32,17 @@ public class UserBookService {
             userBook = userBookOptional.get();
             userBook.setTimes(userBook.getTimes() + 1);
         } else {
-            userBook = new UserBook(user, book);
+            // todo Book not in library
+            userBook = new UserBook(user, book, 0);
         }
         userBookRepository.save(userBook);
         return userBook.getTimes();
 
+    }
+    public void addToLibrary(Long userId, String isbn) {
+        User user = userService.findUser(userId);
+        Book book = bookService.findBook(isbn);
+        userBookRepository.save(new UserBook(user, book, 0));;
     }
 
 

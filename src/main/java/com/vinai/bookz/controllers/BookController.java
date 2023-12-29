@@ -1,6 +1,5 @@
 package com.vinai.bookz.controllers;
 
-import com.vinai.bookz.common.pagination.SortableEntities;
 import com.vinai.bookz.dtos.BookDTO;
 import com.vinai.bookz.dtos.PageConverterDTO;
 import com.vinai.bookz.exceptions.NotFoundException.BookNotFound;
@@ -8,8 +7,6 @@ import com.vinai.bookz.services.BookService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,12 +24,12 @@ public class BookController {
 
     @GetMapping("")
     public PageConverterDTO<BookDTO.BookData> getBooks(
-            @RequestParam(required = false, defaultValue = "") String search,
-            @RequestParam(required = false) List<String> sort,
             @RequestParam(required = false, defaultValue = "0") int page,
-            @RequestParam(required = false, defaultValue = "20") int num
+            @RequestParam(required = false, defaultValue = "20") int num,
+            @RequestParam(required = false) List<String> sort,
+            @RequestParam(required = false, defaultValue = "") String keyword
     ) {
-        return bookService.getAllBooks(page, num, sort, search);
+        return bookService.getAllBooks(page, num, sort, keyword);
     }
 
     @GetMapping("{id}")

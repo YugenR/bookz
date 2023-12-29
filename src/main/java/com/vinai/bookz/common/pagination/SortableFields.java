@@ -47,9 +47,9 @@ public class SortableFields {
                                 throw new PaginationException.InvalidSortingArgumentsException();
                             }
                         }).map(strings -> {
-                                    if (Objects.equals(strings[1], "asc")) {
+                                    if (Objects.equals(strings[1].toUpperCase(), Direction.ASC.toString())) {
                                         direction.set(Direction.ASC);
-                                    } else if (Objects.equals(strings[1], "DESC")) {
+                                    } else if (Objects.equals(strings[1].toUpperCase(), Direction.DESC.toString())) {
                                         direction.set(Direction.DESC);
                                     } else {
                                         throw new PaginationException.InvalidSortingArgumentsException();

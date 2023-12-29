@@ -22,9 +22,9 @@ public class UserBookService {
     @Autowired
     private BookService bookService;
 
-    public Integer readThisBook(Long userId, Long bookId) {
+    public Integer readThisBook(Long userId, String isbn) {
         User user = userService.findUser(userId);
-        Book book = bookService.findBook(bookId);
+        Book book = bookService.findBook(isbn);
         UserBook userBook;
 
         Optional<UserBook> userBookOptional = userBookRepository.findById(new UserBook.UserBookId(user, book));

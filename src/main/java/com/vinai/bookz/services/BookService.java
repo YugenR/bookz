@@ -44,8 +44,8 @@ public class BookService {
                 ).map(Book::toDTOData));
     }
 
-    public BookDTO.BookDetail getBook(Long id) {
-        return findBook(id).toDTODetail();
+    public BookDTO.BookDetail getBook(String isbn) {
+        return findBook(isbn).toDTODetail();
     }
 
     public BookDTO.BookDetail createBook(BookDTO.BookCreate bookDto) {
@@ -57,24 +57,24 @@ public class BookService {
         return bookRepository.save(book).toDTODetail();
     }
 
-    public BookDTO.BookDetail updateBook(Long id, BookDTO.BookUpdate bookDto) {
-        Book book = findBook(id);
+    public BookDTO.BookDetail updateBook(String isbn, BookDTO.BookUpdate bookDto) {
+        Book book = findBook(isbn);
         book.update(bookDto.getTitle(), bookDto.getAuthor(), bookDto.getPlot());
         return bookRepository.save(book).toDTODetail();
     }
 
-    public void deleteBook(Long id) {
-        bookRepository.deleteById(id);
+    public void deleteBook(String isbn) {
+        bookRepository.deleteById(isbn);
     }
 
 
-    public Book findBook(Long id) throws BookNotFound {
-        return bookRepository.findById(id)
+    public Book findBook(String isbn) throws BookNotFound {
+        return bookRepository.findById(isbn)
                 .orElseThrow(BookNotFound::new);
     }
 
     public Boolean checkIsbnExists(String isbn) {
-        return bookRepository.findByIsbn(isbn).isPresent();
+        return bookRepository.findById(isbn).isPresent();
     }
 
 

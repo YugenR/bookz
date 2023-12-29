@@ -12,8 +12,8 @@ import org.hibernate.annotations.SQLRestriction;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @SQLRestriction("deleted <> true")
@@ -64,7 +64,12 @@ public class User {
                 (long) userBooks.size(),
                 (long) userBooks.stream()
                         .mapToInt(UserBook::getTimes)
-                        .sum());
+                        .sum(),
+                userBooks.stream()
+                        .collect(Collectors.toMap(
+                                userBook -> userBook.getBook().getIsbn(),
+                                UserBook::getTimes
+                        )));
     }
 
     public void update(String name, String surname) {

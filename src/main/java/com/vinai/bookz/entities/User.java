@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Entity
 @SQLRestriction("deleted <> true")
-@SQLDelete(sql = "UPDATE user SET email = CONCAT(email, '_deleted'), deleted = true, deleted_at = current_timestamp WHERE id = ?")
+@SQLDelete(sql = "UPDATE user SET email = CONCAT(email, '_deleted_', current_timestamp), deleted = true, deleted_at = current_timestamp WHERE id = ?")
 @RequiredArgsConstructor
 public class User {
 

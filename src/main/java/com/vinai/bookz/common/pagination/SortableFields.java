@@ -16,8 +16,8 @@ public class SortableFields {
     private static final Map<SortableEntities, List<String>> entityFields = new HashMap<>();
 
     static {
-        entityFields.put(SortableEntities.USERS, Arrays.asList("id", "name", "surname", "email"));
-        entityFields.put(SortableEntities.BOOKS, Arrays.asList("id", "author", "title"));
+        entityFields.put(SortableEntities.USERS, Arrays.asList("name", "surname", "email"));
+        entityFields.put(SortableEntities.BOOKS, Arrays.asList("author", "title", "isbn"));
     }
 
     /**

@@ -50,7 +50,7 @@ public class User {
 
     public UserDTO.UserData toDTOData() {
         return new UserDTO.UserData(
-                id, name, surname, email, createdAt,(long) userBooks.size(),
+                id, name, surname, email, createdAt, (long) userBooks.size(),
                 (long) userBooks.stream()
                         .mapToInt(UserBook::getTimes)
                         .sum()

@@ -1,5 +1,6 @@
 package com.vinai.bookz.controllers;
 
+import com.vinai.bookz.dtos.PageConverterDTO;
 import com.vinai.bookz.dtos.UserDTO;
 import com.vinai.bookz.exceptions.NotFoundException.UserNotFound;
 import com.vinai.bookz.services.UserService;
@@ -22,8 +23,13 @@ public class UserController {
 
 
     @GetMapping("")
-    public List<UserDTO.UserData> getUsers() {
-        return userService.getAllUsers();
+    public PageConverterDTO<UserDTO.UserData> getAllUsers(
+            @RequestParam(required = false, defaultValue = "0") int page,
+            @RequestParam(required = false, defaultValue = "20") int num,
+            @RequestParam(required = false) List<String> sort,
+            @RequestParam(required = false, defaultValue = "") String keyword
+    ) {
+        return userService.getAllUsers(page, num, sort, keyword);
     }
 
     @GetMapping("{id}")

@@ -23,7 +23,7 @@ public class BookController {
 
 
     @GetMapping("")
-    public PageConverterDTO<BookDTO.BookData> getBooks(
+    public PageConverterDTO<BookDTO.BookData> getAllBooks(
             @RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false, defaultValue = "20") int num,
             @RequestParam(required = false) List<String> sort,

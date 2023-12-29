@@ -20,13 +20,8 @@ public class BookService {
     @Autowired
     private BookRepository bookRepository;
 
-//    public List<BookDTO.BookData> getAllBooks() {
-//        return bookRepository.findAll()
-//                .stream().map(Book::toDTOData).toList();
-//    }
-
     /**
-     * Gets all existing contracts
+     * Gets all existing books
      */
     public PageConverterDTO<BookDTO.BookData> getAllBooks(
             Integer page,

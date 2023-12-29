@@ -16,8 +16,12 @@ public class UserBookController {
     private UserBookService userBookService;
 
 
+    @PutMapping("users/{uId}/books/{isbn}/add")
+    public void addBookToLibrary(@PathVariable Long uId, @PathVariable String isbn) {
+        userBookService.addToLibrary(uId, isbn);
+    }
     @PutMapping("users/{uId}/books/{isbn}")
-    public Integer readBook(@PathVariable Long uId, @PathVariable String isbn) {
+    public Integer readThisBook(@PathVariable Long uId, @PathVariable String isbn) {
         return userBookService.readThisBook(uId, isbn);
     }
 

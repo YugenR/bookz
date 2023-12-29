@@ -16,7 +16,7 @@ import java.util.Set;
 
 @Entity
 @SQLRestriction("deleted <> true")
-@SQLDelete(sql = "UPDATE book SET isbn = CONCAT(isbn, '_deleted'), deleted = true, deleted_at = current_timestamp WHERE isbn = ?")
+@SQLDelete(sql = "UPDATE book SET isbn = CONCAT(isbn, '_deleted_', current_timestamp), deleted = true, deleted_at = current_timestamp WHERE isbn = ?")
 @RequiredArgsConstructor
 public class Book {
 

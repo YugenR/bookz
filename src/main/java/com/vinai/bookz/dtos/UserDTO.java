@@ -42,6 +42,10 @@ public class UserDTO {
         private String surname;
         private String email;
         private LocalDateTime createdAt;
+        // How many books the user has read
+        private Long bookCount;
+        // Sum of every time the user has read
+        private Long totalReadCount;
     }
 
     @Data
@@ -57,6 +61,7 @@ public class UserDTO {
         private Long bookCount;
         // Sum of every time the user has read
         private Long totalReadCount;
+        // Times read for each book
         private Map<String, Integer> books;
     }
 

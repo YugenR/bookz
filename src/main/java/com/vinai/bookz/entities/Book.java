@@ -5,27 +5,27 @@ import com.vinai.bookz.dtos.BookDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @SQLRestriction("deleted <> true")
-@SQLDelete(sql = "UPDATE book SET deleted = true, deleted_at = current_timestamp WHERE id = ?")
+@SQLDelete(sql = "UPDATE book SET isbn = CONCAT(isbn, '_deleted'), deleted = true, deleted_at = current_timestamp WHERE isbn = ?")
 @RequiredArgsConstructor
 public class Book {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter
-    private Long id;
     @Column
     private String title;
     @Column
     private String author;
-    @Column(unique = true)
+
+    @Id
     @Getter
     private String isbn;
     @Column
@@ -37,6 +37,10 @@ public class Book {
     @Column(columnDefinition = "TEXT")
     private String plot;
 
+    @OneToMany(mappedBy = "book", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @ToString.Exclude
+    private Set<UserBook> userBooks = new HashSet<>();
+
     public Book(String title, String author, String isbn, String plot) {
         this.title = title;
         this.author = author;
@@ -46,13 +50,17 @@ public class Book {
 
     public BookDTO.BookData toDTOData() {
         return new BookDTO.BookData(
-                id, title, author, isbn, createdAt
+                title, author, isbn, createdAt
         );
     }
 
     public BookDTO.BookDetail toDTODetail() {
         return new BookDTO.BookDetail(
-                id, title, author, isbn, createdAt, plot
+                title, author, isbn, createdAt, plot,
+                userBooks.stream()
+                        .mapToInt(UserBook::getTimes)
+                        .sum()
+
         );
     }
 

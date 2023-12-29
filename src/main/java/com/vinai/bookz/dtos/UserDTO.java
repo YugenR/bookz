@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 public class UserDTO {
 
@@ -56,6 +57,7 @@ public class UserDTO {
         private Long bookCount;
         // Sum of every time the user has read
         private Long totalReadCount;
+        private Map<String, Integer> books;
     }
 
 }

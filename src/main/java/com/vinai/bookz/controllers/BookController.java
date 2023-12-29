@@ -32,9 +32,9 @@ public class BookController {
         return bookService.getAllBooks(page, num, sort, keyword);
     }
 
-    @GetMapping("{id}")
-    public BookDTO.BookDetail getBook(@PathVariable long id) throws BookNotFound {
-        return bookService.getBook(id);
+    @GetMapping("{isbn}")
+    public BookDTO.BookDetail getBook(@PathVariable String isbn) throws BookNotFound {
+        return bookService.getBook(isbn);
     }
 
     @PostMapping("")
@@ -42,14 +42,14 @@ public class BookController {
         return bookService.createBook(book);
     }
 
-    @PatchMapping("{id}")
-    public BookDTO.BookDetail updateBook(@PathVariable long id, @RequestBody @Valid BookDTO.BookUpdate book) {
-        return bookService.updateBook(id, book);
+    @PatchMapping("{isbn}")
+    public BookDTO.BookDetail updateBook(@PathVariable String isbn, @RequestBody @Valid BookDTO.BookUpdate book) {
+        return bookService.updateBook(isbn, book);
     }
 
-    @DeleteMapping("{id}")
-    public void deleteBook(@PathVariable long id) {
-        bookService.deleteBook(id);
+    @DeleteMapping("{isbn}")
+    public void deleteBook(@PathVariable String isbn) {
+        bookService.deleteBook(isbn);
     }
 
 }

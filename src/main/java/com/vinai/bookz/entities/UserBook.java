@@ -28,9 +28,10 @@ public class UserBook implements Serializable {
 
         public UserBookId(User user, Book book) {
             this.userId = user.getId();
-            this.bookId = book.getId();
+            this.bookId = book.getIsbn();
         }
-        private long userId, bookId;
+        private long userId;
+        private String bookId;
     }
 
     @EmbeddedId
@@ -45,6 +46,7 @@ public class UserBook implements Serializable {
     @ManyToOne
     @MapsId("bookId")
     @JoinColumn
+    @Getter
     private Book book;
 
     @Getter

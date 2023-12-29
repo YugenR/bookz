@@ -1,9 +1,11 @@
 package com.vinai.bookz.dtos;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
 import java.time.LocalDateTime;
 
@@ -13,13 +15,12 @@ public class BookDTO {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class BookCreate {
-        @NonNull
+        @NotEmpty
         private String title;
-        @NonNull
+        @NotEmpty
         private String author;
-        @NonNull
+        @NotEmpty
         private String isbn;
-        @NonNull
         private String plot;
     }
 
@@ -27,11 +28,11 @@ public class BookDTO {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class BookUpdate {
-        @NonNull
+        @NotEmpty
         private String title;
-        @NonNull
+        @NotEmpty
         private String author;
-        @NonNull
+        @NotNull
         private String plot;
     }
 
@@ -39,7 +40,6 @@ public class BookDTO {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class BookData {
-        private Long id;
         private String title;
         private String author;
         private String isbn;
@@ -50,12 +50,14 @@ public class BookDTO {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class BookDetail {
-        private Long id;
         private String title;
         private String author;
         private String isbn;
         private LocalDateTime createdAt;
         private String plot;
+        private Integer timesRead;
     }
+
+
 
 }

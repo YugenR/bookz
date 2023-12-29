@@ -1,11 +1,16 @@
 package com.vinai.bookz.services;
 
+import com.vinai.bookz.common.pagination.PageConverter;
+import com.vinai.bookz.dtos.PageConverterDTO;
+import com.vinai.bookz.common.pagination.SortableEntities;
+import com.vinai.bookz.common.pagination.SortableFields;
 import com.vinai.bookz.dtos.BookDTO;
 import com.vinai.bookz.entities.Book;
 import com.vinai.bookz.exceptions.BadRequestException;
 import com.vinai.bookz.exceptions.NotFoundException.BookNotFound;
 import com.vinai.bookz.repositories.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,9 +20,28 @@ public class BookService {
     @Autowired
     private BookRepository bookRepository;
 
-    public List<BookDTO.BookData> getAllBooks() {
-        return bookRepository.findAll()
-                .stream().map(Book::toDTOData).toList();
+//    public List<BookDTO.BookData> getAllBooks() {
+//        return bookRepository.findAll()
+//                .stream().map(Book::toDTOData).toList();
+//    }
+
+    /**
+     * Gets all existing contracts
+     */
+    public PageConverterDTO<BookDTO.BookData> getAllBooks(
+            Integer page,
+            Integer num,
+            List<String> sort,
+            String keyword
+    ) {
+        return PageConverter
+                .toDTOPage(bookRepository.findAll(
+                        (page == null && num == null) ? null : PageRequest.of(
+                                page != null ? page : SortableFields.DEFAULT_PAGE,
+                                num != null ? num : SortableFields.DEFAULT_PAGE_DIM,
+                                SortableFields.getSorter(SortableEntities.BOOKS, sort)
+                        ), keyword
+                ).map(Book::toDTOData));
     }
 
     public BookDTO.BookDetail getBook(Long id) {

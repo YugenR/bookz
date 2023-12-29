@@ -1,6 +1,7 @@
 package com.vinai.bookz.controllers;
 
 import com.vinai.bookz.dtos.BookDTO;
+import com.vinai.bookz.dtos.PageConverterDTO;
 import com.vinai.bookz.exceptions.NotFoundException.BookNotFound;
 import com.vinai.bookz.services.BookService;
 import jakarta.validation.Valid;
@@ -22,9 +23,13 @@ public class BookController {
 
 
     @GetMapping("")
-    public List<BookDTO.BookData> getBooks() {
-        return bookService.getAllBooks();
-
+    public PageConverterDTO<BookDTO.BookData> getBooks(
+            @RequestParam(required = false, defaultValue = "0") int page,
+            @RequestParam(required = false, defaultValue = "20") int num,
+            @RequestParam(required = false) List<String> sort,
+            @RequestParam(required = false, defaultValue = "") String keyword
+    ) {
+        return bookService.getAllBooks(page, num, sort, keyword);
     }
 
     @GetMapping("{id}")

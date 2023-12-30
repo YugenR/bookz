@@ -59,6 +59,14 @@ public class BookDTO {
         private Integer timesRead;
     }
 
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class IsbnCheckResponse {
+        private Boolean isUsed;
+        private String title;
+    }
+
 
 
 }

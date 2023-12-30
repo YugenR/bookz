@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BookService {
@@ -41,6 +42,12 @@ public class BookService {
 
     public BookDTO.BookDetail getBook(String isbn) {
         return findBook(isbn).toDTODetail();
+    }
+
+    public BookDTO.IsbnCheckResponse checkIsbnAvailability(String isbn) {
+        Optional<Book> optBook = bookRepository.findById(isbn);
+
+        return new BookDTO.IsbnCheckResponse(optBook.isPresent(), optBook.isPresent() ? optBook.get().getTitle() : "");
     }
 
     public BookDTO.BookDetail createBook(BookDTO.BookCreate bookDto) {

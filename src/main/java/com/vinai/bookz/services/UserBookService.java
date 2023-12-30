@@ -3,6 +3,7 @@ package com.vinai.bookz.services;
 import com.vinai.bookz.entities.Book;
 import com.vinai.bookz.entities.User;
 import com.vinai.bookz.entities.UserBook;
+import com.vinai.bookz.exceptions.NotFoundException;
 import com.vinai.bookz.repositories.UserBookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,10 +40,20 @@ public class UserBookService {
         return userBook.getTimes();
 
     }
+
     public void addToLibrary(Long userId, String isbn) {
         User user = userService.findUser(userId);
         Book book = bookService.findBook(isbn);
-        userBookRepository.save(new UserBook(user, book, 0));;
+        userBookRepository.save(new UserBook(user, book, 0));
+        ;
+    }
+
+    public void removeBookFromLibrary(Long userId, String isbn) {
+        User user = userService.findUser(userId);
+        Book book = bookService.findBook(isbn);
+        UserBook ub = userBookRepository.findById(new UserBook.UserBookId(user, book))
+                .orElseThrow(NotFoundException.BookNotInLibrary::new);
+        userBookRepository.delete(ub);
     }
 
 

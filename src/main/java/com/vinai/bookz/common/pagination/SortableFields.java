@@ -18,6 +18,7 @@ public class SortableFields {
     static {
         entityFields.put(SortableEntities.USERS, Arrays.asList("name", "surname", "email"));
         entityFields.put(SortableEntities.BOOKS, Arrays.asList("author", "title", "isbn"));
+        entityFields.put(SortableEntities.USERBOOKS, Arrays.asList("book.author", "book.title", "book.isbn"));
     }
 
     /**
@@ -35,11 +36,16 @@ public class SortableFields {
 
         return Sort.by(
                 sort.stream().map(s -> s.split(" "))
-                        .peek(arr -> {
+                        .map(arr -> {
                             // There can't be more than 2 strings
                             if (arr.length != 2) {
                                 throw new PaginationException.InvalidSortingArgumentsException();
                             }
+
+                            if (entity == SortableEntities.USERBOOKS) {
+                                return getStrings(arr);
+                            }
+                            return arr;
                         })
                         .peek(arr -> {
                             // If you are sorting with an unexpected key
@@ -59,6 +65,23 @@ public class SortableFields {
                         ).toList()
         );
 
+    }
+
+    private static String[] getStrings(String[] arr) {
+        List<String> list = new ArrayList<>();
+        switch (arr[0]) {
+            case "title":
+                list.add("book.title");
+                break;
+            case "author":
+                list.add("book.author");
+                break;
+            case "isbn":
+                list.add("book.isbn");
+                break;
+        }
+        list.add(arr[1]);
+        return list.toArray(new String[list.size()]);
     }
 }
 

@@ -40,6 +40,7 @@ public class BookService {
                 ).map(Book::toDTOData));
     }
 
+
     public BookDTO.BookDetail getBook(String isbn) {
         return findBook(isbn).toDTODetail();
     }

@@ -1,13 +1,20 @@
 package com.vinai.bookz.services;
 
+import com.vinai.bookz.common.pagination.PageConverter;
+import com.vinai.bookz.common.pagination.SortableEntities;
+import com.vinai.bookz.common.pagination.SortableFields;
+import com.vinai.bookz.dtos.BookDTO;
+import com.vinai.bookz.dtos.PageConverterDTO;
 import com.vinai.bookz.entities.Book;
 import com.vinai.bookz.entities.User;
 import com.vinai.bookz.entities.UserBook;
 import com.vinai.bookz.exceptions.NotFoundException;
 import com.vinai.bookz.repositories.UserBookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -57,4 +64,20 @@ public class UserBookService {
     }
 
 
+    public PageConverterDTO<BookDTO.BookData> getMyBooks(Long userId,
+                                                           Integer page,
+                                                           Integer num,
+                                                           List<String> sort,
+                                                           String keyword) {
+        return PageConverter
+                .toDTOPage(userBookRepository.findAllByUser(
+                        (page == null && num == null) ? null : PageRequest.of(
+                                page != null ? page : SortableFields.DEFAULT_PAGE,
+                                num != null ? num : SortableFields.DEFAULT_PAGE_DIM,
+                                SortableFields.getSorter(SortableEntities.USERBOOKS, sort)
+                        ), userId, keyword
+                ).map(userBook -> userBook.getBook().toDTOData()));
+
+
+    }
 }

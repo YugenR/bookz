@@ -4,4 +4,5 @@ public enum SortableEntities {
 
     USERS,
     BOOKS,
+    USERBOOKS,
 }

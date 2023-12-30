@@ -24,5 +24,9 @@ public class UserBookController {
     public Integer readThisBook(@PathVariable Long uId, @PathVariable String isbn) {
         return userBookService.readThisBook(uId, isbn);
     }
+    @DeleteMapping("users/{uId}/books/{isbn}")
+    public void removeBookFromLibrary(@PathVariable Long uId, @PathVariable String isbn) {
+        userBookService.removeBookFromLibrary(uId, isbn);
+    }
 
 }

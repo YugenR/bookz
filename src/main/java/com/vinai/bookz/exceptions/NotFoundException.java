@@ -17,5 +17,11 @@ public class NotFoundException extends Throwable {
     )
     public static class UserNotFound extends RuntimeException {}
 
+    @ResponseStatus(
+            value = HttpStatus.NOT_FOUND,
+            reason = "Book is not in library"
+    )
+    public static class BookNotInLibrary extends RuntimeException {}
+
 
 }

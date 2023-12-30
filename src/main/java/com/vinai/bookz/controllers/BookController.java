@@ -37,6 +37,11 @@ public class BookController {
         return bookService.getBook(isbn);
     }
 
+    @GetMapping("{isbn}/check")
+    public BookDTO.IsbnCheckResponse checkIsbnAvailability(@PathVariable String isbn) throws BookNotFound {
+        return bookService.checkIsbnAvailability(isbn);
+    }
+
     @PostMapping("")
     public BookDTO.BookDetail createBook(@RequestBody @Valid BookDTO.BookCreate book) {
         return bookService.createBook(book);

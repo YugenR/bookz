@@ -21,6 +21,7 @@ import java.util.Set;
 public class Book {
 
     @Column
+    @Getter
     private String title;
     @Column
     private String author;

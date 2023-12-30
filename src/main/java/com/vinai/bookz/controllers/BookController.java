@@ -38,7 +38,7 @@ public class BookController {
     }
 
     @GetMapping("{isbn}/check")
-    public BookDTO.IsbnCheckResponse checkIsbnAvailability(@PathVariable String isbn) throws BookNotFound {
+    public BookDTO.IsbnCheckResponse checkIsbnAvailability(@PathVariable String isbn) {
         return bookService.checkIsbnAvailability(isbn);
     }
 

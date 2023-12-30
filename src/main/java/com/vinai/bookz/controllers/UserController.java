@@ -37,6 +37,11 @@ public class UserController {
         return userService.getUser(id);
     }
 
+    @GetMapping("{email}/check")
+    public Boolean checkEmailExists(@PathVariable String email) {
+        return userService.checkEmailExists(email);
+    }
+
     @PostMapping("")
     public UserDTO.UserDetail createUser(@RequestBody @Valid UserDTO.UserCreate user) {
         return userService.createUser(user);
